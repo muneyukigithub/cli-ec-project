@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+  app:
+    container_name: python-container
+    build:
+      context: ./backend
+    tty: true
+
+    volumes:
+      - ./backend/code:/code
+    depends_on:
+      - db
+    networks:
+      - backend_network
+  db:
+    container_name: mysql-container
+    image: mysql:8.0
+    ports:
+      - "3308:3306"
+    networks:
+      - backend_network
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: ecDB
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      TZ: 'Asia/Tokyo'
+networks:
+  backend_network:
+    driver: bridge

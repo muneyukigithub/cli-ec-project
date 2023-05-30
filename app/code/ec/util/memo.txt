@@ -1,0 +1,93 @@
+main.py:プログラム起点
+controller.py:コントローラーモジュール
+login.py:ログインモジュール
+menu.py:メニューモジュール
+model.py:モデルモジュール
+
+作業手順書
+■アプリケーション作業
+
+1. パッケージマネージャのアップデート
+sudo apt-get update
+2. 必要なパッケージのインストール
+apt-get install python-dev default-libmysqlclient-dev
+3. 
+
+insert into user values(1,"password","admin@admin.com","admin","99988887777",0,0,2023-05-21 13:45:30)
+
+select * from orders inner join orders_detail on orders.id = orders_detail.orders_id;
+
+
+■データベース作業
+
+1. データベースの作成
+create database ecDB 
+
+
+ALTER TABLE user CHANGE password password varchar(255) NOT NULL;
+
+ALTER TABLE user CHANGE id id INT AUTO_INCREMENT;
+
+ALTER TABLE orders CHANGE user_id user_id INT;
+
+ALTER TABLE orders DROP FOREIGN KEY user_id;
+
+2. ユーザーテーブルを作成する
+create table user (
+id INT primary key,
+password varchar(255),
+email varchar(255),
+username varchar(255),
+phonenumber varchar(255),
+is_active TINYINT(1),
+role TINYINT(1),
+last_login DATETIME,
+created_at DATETIME
+);
+
+3. 商品テーブルを作成する
+create table product (
+id INT primary key,
+product varchar(255),
+price varchar(255),
+created_at DATETIME
+);
+
+4. 注文テーブルを作成する
+create table orders (
+id INT primary key,
+user_id INT,
+quantity INT,
+created_at DATETIME,
+FOREIGN KEY (user_id) REFERENCES user(id)
+);
+
+5. 注文明細テーブルを作成する
+create table orders_detail (
+id INT primary key,
+orders_id INT,
+product_id INT,
+quantity INT,
+created_at DATETIME,
+FOREIGN KEY (orders_id) REFERENCES orders(id),
+FOREIGN KEY (product_id) REFERENCES product(id)
+);
+
+6. 在庫テーブルを作成する
+create table product_stock (
+id INT primary key,
+product_id INT,
+quantity INT,
+created_at DATETIME,
+FOREIGN KEY (product_id) REFERENCES product(id)
+);
+
+7. sessionテーブルを作成する
+create table session (
+id INT primary key AUTO_INCREMENT,
+session_id varchar(255) NOT NULL,
+user_id INT NOT NULL,
+expiration DATETIME NOT NULL,
+FOREIGN KEY (user_id) REFERENCES user(id)
+);
+
