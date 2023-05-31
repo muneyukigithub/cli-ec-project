@@ -12,6 +12,7 @@ class Menu:
     """メニューを管理するクラス"""
 
     def __init__(self,user):
+        self.is_running = True
         self.user = user
         self.auth = Auth(user)
         self.shop = Shop(user)
@@ -26,7 +27,7 @@ class Menu:
             "商品購入履歴":self.shop.order_history,
             "カート商品表示":self.cart.displayproduct_in_cart,
             "カート商品削除":self.cart.deleteproduct_in_cart,
-            "終了":self.end}
+            "終了": self.end}
 
     def show_menulist(self):
         select_menu = questionary.select(f'メニューを選択してください(現在{self.user.username}ユーザー)',choices=self.menulist.keys()).ask()
@@ -34,8 +35,9 @@ class Menu:
         
 
     def execute_menuaction(self,select_menu):
+
         self.menulist[select_menu]()
 
     def end(self):
         print("お買い物を終了します")
-        sys.exit(0)
+        self.is_running = False
