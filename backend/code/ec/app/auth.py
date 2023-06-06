@@ -59,6 +59,7 @@ class Auth:
         try:
             username,password = self.input_logindata()
             user = self.basic_authenticate(username,password)
+
             sessionid = self.create_session(user)
 
             if user and sessionid:
@@ -72,7 +73,7 @@ class Auth:
         except ValueError as e:
             print(f"空の入力値があります")
         except Exception as e:
-            print("エラーが発生しました")
+            print("エラーが発生しました",e)
         
         return False
 
