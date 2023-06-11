@@ -47,6 +47,7 @@ class TestCart(unittest.TestCase):
         self.assertEqual(True,result)
         self.cart.get_cartdata.assert_called_once()
         self.cart.show_cartdata.assert_called_once()
+        
 
     def test_displayproduct_in_cart_not_loggined(self):
         """
