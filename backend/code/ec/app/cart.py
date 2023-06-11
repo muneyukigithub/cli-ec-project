@@ -12,14 +12,17 @@ class Cart:
     def displayproduct_in_cart(self):
         if not self.is_logged_in():
             print("ログインしてください")
-            return 
+            return False
 
         try:
             cartdata = self.get_cartdata()
+            self.show_cartdata(cartdata)
+            return True
         except Exception as e:
-            print("エラー発生")
+            raise Exception("エラー発生")
 
-        self.show_cartdata(cartdata)
+
+
 
 
     def show_cartdata(self,cartdata):
